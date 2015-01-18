@@ -90,10 +90,10 @@
 			document.getElementById('doc').innerHTML += document.getElementById(Dhtml).innerHTML;
 		}
 						
-		tmp = getElementsByIdRegExp("div", "A-"+label+"(\\.{1}\\d){1}$");
-		a_href = getElementsByIdRegExp("div", "A-href-"+label+"(\\.{1}\\d){1}$");
-		a_target = getElementsByIdRegExp("div", "A-target-"+label+"(\\.{1}\\d){1}$");
-		tmp_x = getElementsByIdRegExp("div", "X-"+label+"(\\.{1}\\d){1}$");
+		tmp = getElementsByIdRegExp("div", "A-"+label+"(\\.{1}\\d*){1}$");
+		a_href = getElementsByIdRegExp("div", "A-href-"+label+"(\\.{1}\\d*){1}$");
+		a_target = getElementsByIdRegExp("div", "A-target-"+label+"(\\.{1}\\d*){1}$");
+		tmp_x = getElementsByIdRegExp("div", "X-"+label+"(\\.{1}\\d*){1}$");
 		var Xishere = 0;
 		for ( var i = 0; i < tmp.length; i++ ) {
 			var nextlabel = tmp[i].id.substr(2);
