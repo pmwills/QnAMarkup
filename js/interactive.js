@@ -95,23 +95,36 @@
 		a_target = getElementsByIdRegExp("div", "A-target-"+label+"(\\.{1}\\d*){1}$");
 		tmp_x = getElementsByIdRegExp("div", "X-"+label+"(\\.{1}\\d*){1}$");
 		var Xishere = 0;
-		for ( var i = 0; i < tmp.length; i++ ) {
-			var nextlabel = tmp[i].id.substr(2);
-			var Xihtml = 'Xi-'+nextlabel;
-			var regexp = "\<variable\>";
-			var regexp_js = "^javascript:";
-			if (tmp[i].innerHTML.match(regexp)) {
-				document.getElementById('Choices').innerHTML += "<div class=\"xdiv\"><input type=\"text\" id=\""+Xihtml+"\" name=\""+Xihtml+"\" class=\"xinput\" onkeypress=\"{if (event.keyCode==13)answerQ('"+nextlabel+"')}\"/><a href=\"javascript:void('');\" class=\"xbutton\" onClick=\"answerQ('"+nextlabel+"');\"><span class=\"qpad\">Save above text as answer.</span></a></div>";
-				Xishere = Xihtml;
-			} else if (a_href[i].innerHTML.match(regexp_js) && a_href[i].innerHTML != "javascript:void('');") {
-				tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
-				var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
-				document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');"+script_call+"\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";							
-			} else {
-				tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
-				document.getElementById('Choices').innerHTML += "<a href=\""+a_href[i].innerHTML+"\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";				
-			}
-		}			
+        // Make buttons if under threshold value, dropdowns otherwise
+        if (MIN_DROPDOWN_LENGTH > 0 && MIN_DROPDOWN_LENGTH >= tmp.length) {
+            var nextlabel = tmp[i].id.substr(2);
+            tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
+            $('#Choices').html("<form action=\"#\"><fieldset><select class=\"dropdown\"></select></fieldset></form>");
+            
+            for (var i = 0; i < tmp.length; i++ ) {
+                var nextlabel = tmp[i].id.substr(2);
+                var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
+                $('#Choices select').append("<option value='"+$(tmp[i].innerHTML).text()+"' onclick='answerQ('"+nextlabel+"');"+script_call+">"+tmp[i].innerHTML+"</option>");
+                }
+        } else {
+            for ( var i = 0; i < tmp.length; i++ ) {
+                var nextlabel = tmp[i].id.substr(2);
+                var Xihtml = 'Xi-'+nextlabel;
+                var regexp = "\<variable\>";
+                var regexp_js = "^javascript:";
+                if (tmp[i].innerHTML.match(regexp)) {
+                    document.getElementById('Choices').innerHTML += "<div class=\"xdiv\"><input type=\"text\" id=\""+Xihtml+"\" name=\""+Xihtml+"\" class=\"xinput\" onkeypress=\"{if (event.keyCode==13)answerQ('"+nextlabel+"')}\"/><a href=\"javascript:void('');\" class=\"xbutton\" onClick=\"answerQ('"+nextlabel+"');\"><span class=\"qpad\">Save above text as answer.</span></a></div>";
+                    Xishere = Xihtml;
+                } else if (a_href[i].innerHTML.match(regexp_js) && a_href[i].innerHTML != "javascript:void('');") {
+                    tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
+                    var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
+                    document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');"+script_call+"\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";							
+                } else {
+                    tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
+                    document.getElementById('Choices').innerHTML += "<a href=\""+a_href[i].innerHTML+"\" class=\"qabutton\" onClick=\"answerQ('"+nextlabel+"');\" "+a_target[i].innerHTML+"><span class=\"qpad\">"+tmp[i].innerHTML+"</span></a>";				
+                }
+            }
+        }
 
 		if (restar == undefined) {
 			document.getElementById('Choices').innerHTML += "<a href=\"javascript:void('');\" class=\"qabutton\" onClick=\"startAT('1');\"><span class=\"qpad\">Start over.</span></a>";
