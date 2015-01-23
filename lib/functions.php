@@ -262,7 +262,7 @@ function enumerate_tree($editor) {
 	$credits = preg_split($regex_cred, $text[0], -1, PREG_SPLIT_NO_EMPTY);	
 	$credit_hits = preg_match_all($regex_cred,$text[0],$cred_matches, PREG_PATTERN_ORDER);
 	$n = 0;
-    $dropdown = 0
+    $dropdown = 0;
 	foreach ($cred_matches[0] as $value) {
 		if (preg_match("/title:/i",$value)) {
 			$title = $credits[$n];
@@ -279,6 +279,7 @@ function enumerate_tree($editor) {
 			$after = $credits[$n];		
 		} else if (preg_match("/dropdown:/i",$value)) {
 			$dropdown = $credits[$n];		
+        }
 		$n++;
 	}
 	# Clean up header tag contents for use in metadata
@@ -288,7 +289,7 @@ function enumerate_tree($editor) {
 	$description_cl = preg_replace("/<[^>]*>/", "", $description);
 	$description_cl = preg_replace("/^\s*|\n*|\r*/", "", $description_cl);
 	$description_cl = htmlentities($description_cl);
-    $dropdown = parseInt($dropdown);
+    $dropdown = (int) $dropdown;
 	# "clean" twice anything that will go in an output text area.
 	$title_cl_textarea = htmlentities($title_cl);
 	$description_cl_textarea = htmlentities($description_cl);
@@ -582,7 +583,8 @@ if ($wellformed ==1) {
 		foreach ($questions as $value) {
 			$value[1] = stripslashes($value[1]); 
 			if ($i==0) { 
-				$snippet_output = $snippet_output."<script type='text/javascript'>var MIN_FOR_DROPDOWN=$dropdown;</script><FORM name=\"FORM\" id=\"FORM\"><div id=\"conversation\" style=\"margin:".($frame_pad)."px auto 0 auto;padding:0 ".$frame_pad."px;max-width:".$col_width."px\">".$before."<div id='QandA' class='QandA'><div style='padding:15px;background:#ddffdd;text-align:center;'>Loading QnA...</div></div>"; 
+				$snippet_output = $snippet_output."<script type='text/javascript'>var MIN_DROPDOWN_LENGTH=$dropdown;
+</script><FORM name=\"FORM\" id=\"FORM\"><div id=\"conversation\" style=\"margin:".($frame_pad)."px auto 0 auto;padding:0 ".$frame_pad."px;max-width:".$col_width."px\">".$before."<div id='QandA' class='QandA'><div style='padding:15px;background:#ddffdd;text-align:center;'>Loading QnA...</div></div>"; 
 				$snippet_output = $snippet_output."<div id='Choices' class='choices'>";
 				#$j=0;
 				#foreach ($answers as $valuetoo) {

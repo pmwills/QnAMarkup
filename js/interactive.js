@@ -95,16 +95,20 @@
 		a_target = getElementsByIdRegExp("div", "A-target-"+label+"(\\.{1}\\d*){1}$");
 		tmp_x = getElementsByIdRegExp("div", "X-"+label+"(\\.{1}\\d*){1}$");
 		var Xishere = 0;
-        // Make buttons if under threshold value, dropdowns otherwise
-        if (MIN_DROPDOWN_LENGTH > 0 && MIN_DROPDOWN_LENGTH >= tmp.length) {
-            var nextlabel = tmp[i].id.substr(2);
-            tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
-            $('#Choices').html("<form action=\"#\"><fieldset><select class=\"dropdown\"></select></fieldset></form>");
+        // Make buttons if there are fewer answers under dropdown threshold, dropdown if more
+        if (MIN_DROPDOWN_LENGTH > 0 && MIN_DROPDOWN_LENGTH <= tmp.length) {
+            $('#Choices').html("<form action=\"#\"><select class=\"dropdown\"></select></form>");
             
             for (var i = 0; i < tmp.length; i++ ) {
+                tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
                 var nextlabel = tmp[i].id.substr(2);
-                var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
-                $('#Choices select').append("<option value='"+$(tmp[i].innerHTML).text()+"' onclick='answerQ('"+nextlabel+"');"+script_call+">"+tmp[i].innerHTML+"</option>");
+                
+                // add qnamarkup javascript to call
+                if (a_href[i].innerHTML.match(regexp_js) && a_href[i].innerHTML != "javascript:void('');") {
+                    var script_call = a_href[i].innerHTML.replace(/^javascript:/gi,"");
+                } else { var script_call = "";}
+               
+                $('#Choices select').append("<option onclick=\"answerQ("+nextlabel+");"+script_call+"\">"+tmp[i].innerHTML+"</option>");
                 }
         } else {
             for ( var i = 0; i < tmp.length; i++ ) {

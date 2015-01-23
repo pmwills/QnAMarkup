@@ -106,7 +106,7 @@
 		padding:0 <?php echo $line_height*0.75 ?>px;
 	}
 
-	a.qabutton {
+	a.qabutton, .dropdown {
 		float:left;
 		font-family: <?php echo $font_family ?>;
 		font-size: <?php echo $font_size ?>px;

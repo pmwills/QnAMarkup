@@ -1,11 +1,11 @@
 <?php 
 
 # The URL associated with your QnA instance's main page.
-$home = "http://www.example.com/";
+$home = "http://peterwills.ca/law/qnamarkup/";
 
 # Source Whitelist. See http://www.qnamarkup.org/syntax/#remote
 # Provide a comma separated list of domains, and make sure to include the trailing slash (/).
-$whitelist = "http://www.qnamarkup.org/,http://colarusso.github.io/";
+$whitelist = "http://www.qnamarkup.org/,http://colarusso.github.io/,http://peterwills.ca/";
 
 # Dynamic Nav Bar Menu
 function nav_bar($home) {
@@ -15,7 +15,7 @@ function nav_bar($home) {
 		<a href="<?php echo $home ?>syntax/">Syntax</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="https://github.com/colarusso/QnAMarkup/wiki/Gallery/" target="_blank">Gallery</a>&nbsp;&nbsp;
 		<a href="https://github.com/colarusso/QnAMarkup/wiki/" target="_blank">Wiki</a>&nbsp;&nbsp;
-		<a href="https://github.com/colarusso/QnAMarkup" target="_blank">GitHub</a>
+		<a href="https://github.com/pmwills/QnAMarkup" target="_blank">GitHub</a>
 	</span>
 <?php
 }

@@ -71,6 +71,10 @@ Feel free to start with the <a href="#body">Body</a> section. That's where all t
 	<ul>
 		If present, the contents of this tag are placed at the end of the QnA output directly following the rendering of its footer link(s). This is after the closing of the output's FORM element. This tag should include anything you want to place in the HTML output at this point, perhaps some Javascript. 
 	</ul>
+    <h2><code>Dropdown: <font color=black><em>integer</em></font></code></h2>
+	<ul>
+		Sets the minimum number of possible As to a Q for the As to be presented as a dropdown list rather than as individual buttons. If Dropdown is set to 0 or left undefined, dropdowns will never be used.
+	</ul>
 
 <a name="body"></a>
 <h2>Body</h2>
