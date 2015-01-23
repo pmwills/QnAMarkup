@@ -97,7 +97,7 @@
 		var Xishere = 0;
         // Make buttons if there are fewer answers under dropdown threshold, dropdown if more
         if (MIN_DROPDOWN_LENGTH > 0 && MIN_DROPDOWN_LENGTH <= tmp.length) {
-            $('#Choices').html("<form action=\"#\"><select class=\"dropdown\"></select></form>");
+            $('#Choices').html("<form action=\"#\"><select class=\"dropdown\" onchange=\"eval($('.dropdown').find(':selected').attr('onclick'))\"></select></form>");
             
             for (var i = 0; i < tmp.length; i++ ) {
                 tmp[i].innerHTML = tmp[i].innerHTML.replace(/(\<br\>){2}/gi,"<br> <br>");
